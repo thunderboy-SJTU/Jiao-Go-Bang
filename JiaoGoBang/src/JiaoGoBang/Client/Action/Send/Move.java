@@ -1,14 +1,13 @@
 package JiaoGoBang.Client.Action.Send;
 
 
-import JiaoGoBang.Client.ClientThread;
 import JiaoGoBang.Client.UI.UI;
 import JiaoGoBang.Common.Request;
 import JiaoGoBang.Common.XStreamUtil;
 import JiaoGoBang.Common.Model.Chess;
 import JiaoGoBang.Common.Model.User;
 
-public class Move {
+public class Move implements Send {
    private Chess chess;
    private String mode;
    
@@ -26,7 +25,7 @@ public class Move {
 		req.setParameter("chess", chess);
 		String xml = XStreamUtil.toXML(req);
 		user.getPrintStream().println(xml);
-		ClientThread thread = new ClientThread();
-		thread.start();
+		/*ClientThread thread = new ClientThread();
+		thread.start();*/
 	}
 }

@@ -4,19 +4,14 @@ import JiaoGoBang.Common.Model.User;
 
 public class UI {
    private static Begin begin;
-   private static LoginBoard loginBoard;
    private static ModeChoose modeChoose;
    private static GameBoard gameBoard;
+   private static ReplayBoard replayBoard;
    private static User user;
    
    public static void setBegin(Begin begin)
    {
 	   UI.begin = begin;
-   }
-   
-   public static void setLoginBoard(LoginBoard loginBoard)
-   {
-	   UI.loginBoard = loginBoard;
    }
    
    public static void setModeChoose(ModeChoose modeChoose)
@@ -29,6 +24,11 @@ public class UI {
 	   UI.gameBoard = gameBoard;
    }
    
+   public static void setReplayBoard(ReplayBoard replayBoard)
+   {
+	   UI.replayBoard = replayBoard;
+   }
+   
    public static void setUser(User user)
    {
 	   UI.user = user;
@@ -37,11 +37,6 @@ public class UI {
    public static Begin getBegin()
    {
 	   return begin;
-   }
-   
-   public static LoginBoard getLoginBoard()
-   {
-	   return loginBoard;
    }
    
    public static ModeChoose getModeChoose()
@@ -54,6 +49,10 @@ public class UI {
 	   return gameBoard;
    }
    
+   public static ReplayBoard getReplayBoard()
+   {
+	   return replayBoard;
+   }
    public static User getUser()
    {
 	   return user;

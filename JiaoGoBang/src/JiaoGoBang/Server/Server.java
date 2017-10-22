@@ -8,21 +8,22 @@ import java.util.List;
 
 import JiaoGoBang.Common.Model.Room;
 import JiaoGoBang.Common.Model.User;
+import JiaoGoBang.Server.NewAI.NewAI;
 
 public class Server {
     private ServerSocket serverSocket;
     private static List<User> onlineUsers = new ArrayList<User>();
     private static List<Room> PVProoms = new ArrayList<Room>();
-    private static List<Room> PVErooms = new ArrayList<Room>();
    
     public Server() throws IOException
     {
         serverSocket = new ServerSocket(10000);
+        NewAI newAI = new NewAI(null);
+        newAI.importFile();
         while(true)
         {
         	Socket socket = serverSocket.accept();
-        	new ServerThread(socket).start();
-        	
+        	new ServerThread(socket).start();       	
         }
     }
     
@@ -39,8 +40,6 @@ public class Server {
         		if(onlineUsers.get(i).getId().equals(user.getId()))
         			onlineUsers.remove(i);       				       			
     	}
-    	for(int i=0;i<onlineUsers.size();i++)
-    	    System.out.println(onlineUsers.get(i).getUsername());
     }
     
     public static void addPVPRoom(Room room)
@@ -48,9 +47,12 @@ public class Server {
     	PVProoms.add(room);
     }
     
-    public static void addPVERoom(Room room)
+
+    public static void removePVPRoom(Room room)
     {
-    	PVErooms.add(room);
+    	for(int i=0;i<PVProoms.size();i++)
+    		if(PVProoms.get(i) == room)
+    			PVProoms.remove(i);       	
     }
     
     public static Room findRoom()

@@ -17,18 +17,18 @@ public class Button extends JButton{
         this.setMinimumSize(d);
         if(mode == 1)
         {
-        ImageIcon icon1=new ImageIcon("src/green.gif");
+        ImageIcon icon1=new ImageIcon("img/green.gif");
         setIcon(icon1);
 
-        ImageIcon icon2=new ImageIcon("src/lightblue.gif");
+        ImageIcon icon2=new ImageIcon("img/lightblue.gif");
         setRolloverIcon(icon2);
         }
         else if(mode == 2)
         {
-        	ImageIcon icon1=new ImageIcon("src/red.gif");
+        	ImageIcon icon1=new ImageIcon("img/red.gif");
             setIcon(icon1);
 
-            ImageIcon icon2=new ImageIcon("src/lightblue.gif");
+            ImageIcon icon2=new ImageIcon("img/lightblue.gif");
             setRolloverIcon(icon2);
         }
 

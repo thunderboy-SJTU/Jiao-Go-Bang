@@ -25,17 +25,33 @@ public class MoveAction implements Action {
 			return;
 		}
 		if (status == 3) {
+			Chess chess = (Chess) response.getData("chess");
+			UI.getGameBoard().getChessBoard().getChessTable().addChess(chess);
+			UI.getGameBoard().repaint();
 			JOptionPane.showMessageDialog(null, "ƒ„ ‰¡À£°", "Lose", JOptionPane.PLAIN_MESSAGE);
 			UI.getGameBoard().reset();
-
 			return;
 		}
 		if(status == 4)
 			
 		{
-			System.out.println("hee3");
 			UI.getGameBoard().setStatus(1);
 			UI.getGameBoard().repaint();
+			return;
+		}
+		if(status == 5)
+		{
+			JOptionPane.showMessageDialog(null, "∫Õ∆Â£°", "Draw", JOptionPane.PLAIN_MESSAGE);
+			UI.getGameBoard().reset();
+			return;
+		}
+		if(status == 6)
+		{
+			Chess chess = (Chess) response.getData("chess");
+			UI.getGameBoard().getChessBoard().getChessTable().addChess(chess);
+			UI.getGameBoard().repaint();
+			JOptionPane.showMessageDialog(null, "∫Õ∆Â£°", "Draw", JOptionPane.PLAIN_MESSAGE);
+			UI.getGameBoard().reset();
 			return;
 		}
 		Chess chess = (Chess) response.getData("chess");

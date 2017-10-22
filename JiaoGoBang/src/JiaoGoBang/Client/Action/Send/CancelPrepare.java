@@ -5,7 +5,7 @@ import JiaoGoBang.Common.Request;
 import JiaoGoBang.Common.XStreamUtil;
 import JiaoGoBang.Common.Model.User;
 
-public class CancelPrepare {
+public class CancelPrepare implements Send {
 	private String mode;
 
 	

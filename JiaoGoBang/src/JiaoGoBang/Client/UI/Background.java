@@ -18,7 +18,7 @@ public class Background extends JPanel {
 	public static final int HEIGHT = 625;
 
 	public Background() {
-		background = Toolkit.getDefaultToolkit().getImage("src/background.jpg");
+		background = Toolkit.getDefaultToolkit().getImage("img/background.jpg");
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
 	}
 

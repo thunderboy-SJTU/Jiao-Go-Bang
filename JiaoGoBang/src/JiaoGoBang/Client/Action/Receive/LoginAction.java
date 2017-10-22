@@ -20,13 +20,13 @@ public class LoginAction implements Action {
 			JOptionPane.showMessageDialog(null, "登录过程中遇到错误！", "ERROR", JOptionPane.PLAIN_MESSAGE, icon);
 			return;
 		}
-		ModeChoose mode = new ModeChoose((UI.getLoginBoard().getUser()));
+		ModeChoose mode = new ModeChoose((UI.getBegin().getUser()));
 		UI.setModeChoose(mode);
 		mode.setVisible(true);
 		UI.getBegin().setEnabled(true);
 		UI.getBegin().setVisible(false);
-		UI.getLoginBoard().setVisible(false);
-		UI.getLoginBoard().setEnabled(true);
+		//UI.getLoginBoard().setVisible(false);
+		//UI.getLoginBoard().setEnabled(true);
 		return;
 	}
 

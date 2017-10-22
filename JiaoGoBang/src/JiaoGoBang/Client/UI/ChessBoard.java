@@ -35,13 +35,14 @@ public class ChessBoard extends JPanel implements MouseListener {
 	private Image board;
 	private int status;
 	private JFrame jFrame;
-	
+	private int isReplayed;
 
 	public ChessBoard(JFrame jFrame) {
 		chessTable = new ChessTable(ROWS, COLS);
 		status = 0;
+		isReplayed = 0;
 		this.jFrame = jFrame;
-		board = Toolkit.getDefaultToolkit().getImage("src/board.jpg");
+		board = Toolkit.getDefaultToolkit().getImage("img/board.jpg");
 		addMouseListener(this);
 		addMouseMotionListener(new MouseMotionListener() {
 			public void mouseMoved(MouseEvent event) {
@@ -58,6 +59,35 @@ public class ChessBoard extends JPanel implements MouseListener {
 			}
 		});
 		setPreferredSize(new Dimension(ROWS * GRID_SPAN + 2 * MARGIN, ROWS * GRID_SPAN + 2 * MARGIN));
+	}
+
+	public ChessBoard(JFrame jFrame, int isReplayed) {
+		chessTable = new ChessTable(ROWS, COLS);
+		status = 0;
+		this.isReplayed = isReplayed;
+		this.jFrame = jFrame;
+		board = Toolkit.getDefaultToolkit().getImage("img/board.jpg");
+		addMouseListener(this);
+		addMouseMotionListener(new MouseMotionListener() {
+			public void mouseMoved(MouseEvent event) {
+				int x1 = (event.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
+				int y1 = (event.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
+				if (x1 < 0 || x1 > ROWS || y1 < 0 || y1 > COLS)
+					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				else if(isReplayed == 0)
+					setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			public void mouseDragged(MouseEvent event) {
+
+			}
+		});
+		setPreferredSize(new Dimension(ROWS * GRID_SPAN + 2 * MARGIN, ROWS * GRID_SPAN + 2 * MARGIN));
+	}
+	
+	public void setChessTable(ChessTable chessTable)
+	{
+		this.chessTable = chessTable;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -126,24 +156,25 @@ public class ChessBoard extends JPanel implements MouseListener {
 	}
 
 	public void mousePressed(MouseEvent event) {
-		if(status == 1)
-		{
-		int x = (event.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
-		int y = (event.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
-		if (x < 0 || x > ROWS || y < 0 || y > COLS)
-			return;
-		Chess chess = new Chess();
-		chess.setX(x);
-		chess.setY(y);
-		chess.setColor(((GameBoard)jFrame).getColor());
-		if (chessTable.findChess(chess)) {
-			return;
-		}
-		chessTable.addChess(chess);		
-		UI.getGameBoard().setStatus(0);
-		Move move = new Move(chess,((GameBoard)jFrame).getMode());
-		move.execute();
-		repaint();
+		if (isReplayed == 0) {
+			if (status == 1) {
+				int x = (event.getX() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
+				int y = (event.getY() - MARGIN + GRID_SPAN / 2) / GRID_SPAN;
+				if (x < 0 || x > ROWS || y < 0 || y > COLS)
+					return;
+				Chess chess = new Chess();
+				chess.setX(x);
+				chess.setY(y);
+				chess.setColor(((GameBoard) jFrame).getColor());
+				if (chessTable.findChess(chess)) {
+					return;
+				}
+				chessTable.addChess(chess);
+				UI.getGameBoard().setStatus(0);
+				Move move = new Move(chess, ((GameBoard) jFrame).getMode());
+				move.execute();
+				repaint();
+			}
 		}
 	}
 
@@ -162,25 +193,21 @@ public class ChessBoard extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent event) {
 
 	}
-	
-	public int getStatus()
-	{
+
+	public int getStatus() {
 		return status;
 	}
-	
-	public void setStatus(int status)
-	{
+
+	public void setStatus(int status) {
 		this.status = status;
 	}
-	
-	public ChessTable getChessTable()
-	{
+
+	public ChessTable getChessTable() {
 		return chessTable;
 	}
-	
-	public void reset()
-	{
-		chessTable = new ChessTable(14,14);
+
+	public void reset() {
+		chessTable = new ChessTable(14, 14);
 		status = 0;
 	}
 

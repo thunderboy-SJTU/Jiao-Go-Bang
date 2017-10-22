@@ -1,14 +1,10 @@
 package JiaoGoBang.Client.Action.Send;
 
-
-
-import JiaoGoBang.Client.ClientThread;
-
 import JiaoGoBang.Common.Request;
 import JiaoGoBang.Common.XStreamUtil;
 import JiaoGoBang.Common.Model.User;
 
-public class Login {
+public class Login implements Send {
 	private User user;
 
 	public Login(User user) {
@@ -24,7 +20,8 @@ public class Login {
 		req.setParameter("username", username);
 		String xml = XStreamUtil.toXML(req);
 		user.getPrintStream().println(xml);
-		ClientThread thread = new ClientThread();
-		thread.start();
+		/*
+		 * ClientThread thread = new ClientThread(); thread.start();
+		 */
 	}
 }

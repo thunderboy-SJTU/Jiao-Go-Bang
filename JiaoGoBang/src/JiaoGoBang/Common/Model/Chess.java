@@ -7,6 +7,18 @@ public class Chess {
 	private int y;
 	private Color color;
 
+	public Chess() {
+		x = -1;
+		y = -1;
+		color = null;
+	}
+
+	public Chess(int x, int y, Color color) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -18,53 +30,45 @@ public class Chess {
 	public Color getColor() {
 		return color;
 	}
-	
-	public void setX(int x)
-	{
+
+	public void setX(int x) {
 		this.x = x;
 	}
-	
-	public void setY(int y)
-	{
+
+	public void setY(int y) {
 		this.y = y;
 	}
-	
-	public void setColor(Color color)
-	{
+
+	public void setColor(Color color) {
 		this.color = color;
 	}
-	
-	public boolean isEqual(Chess chess)
-	{
-		if(chess.getX() == x && chess.getY() == y)
+
+	public boolean isEqual(Chess chess) {
+		if (chess.getX() == x && chess.getY() == y)
 			return true;
 		return false;
 	}
-	
-	public boolean isHorizontal(Chess chess)
-	{
-		if(chess.getY() == y && chess.color.equals(color))
+
+	public boolean isHorizontal(Chess chess) {
+		if (chess.getY() == y && chess.color.equals(color))
 			return true;
 		return false;
 	}
-	
-	public boolean isVertical(Chess chess)
-	{
-		if(chess.getX() == x&& chess.color.equals(color))
+
+	public boolean isVertical(Chess chess) {
+		if (chess.getX() == x && chess.color.equals(color))
 			return true;
 		return false;
 	}
-	
-	public boolean isRightSlant(Chess chess)
-	{
-		if(((chess.getY()-chess.getX())==(y-x))&& chess.color.equals(color))
+
+	public boolean isRightSlant(Chess chess) {
+		if (((chess.getY() - chess.getX()) == (y - x)) && chess.color.equals(color))
 			return true;
 		return false;
 	}
-	
-	public boolean isLeftSlant(Chess chess)
-	{
-		if(((chess.getY()+chess.getX())==(y+x))&& chess.color.equals(color))
+
+	public boolean isLeftSlant(Chess chess) {
+		if (((chess.getY() + chess.getX()) == (y + x)) && chess.color.equals(color))
 			return true;
 		return false;
 	}

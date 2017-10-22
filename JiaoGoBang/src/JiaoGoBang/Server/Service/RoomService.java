@@ -31,11 +31,10 @@ public class RoomService implements Service {
 				room.addCount();
 			}
 			player.setRoom(room);
-			System.out.println("lalala");
+			player.setStatus(1);
 			while (room.getCount() != 2) {
 				Thread.yield();
 			}
-			System.out.println("kakaka");
 			String rivalname = room.getAnotherPlayer(player).getUsername();
 			response.setData("username", player.getUsername());
 			response.setData("rivalname", rivalname);
@@ -44,12 +43,30 @@ public class RoomService implements Service {
 			
 			try {
 				PrintStream ps = new PrintStream(socket.getOutputStream());
-				System.out.println(xml);
 				ps.println(xml);
-				System.out.println(xml);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		else if(mode.equals("PVE"))
+		{
+			String userId = (String) request.getParameter("id");
+			Player player = (Player) Server.getUser(userId);
+			if (player == null)
+				return;
+			Room room = new Room(player, null);
+			player.setRoom(room);
+			response.setData("username", player.getUsername());
+			response.setData("rivalname", "Computer");
+			response.setStatus(1);
+			String xml = XStreamUtil.toXML(response);
+			try {
+				PrintStream ps = new PrintStream(socket.getOutputStream());
+				ps.println(xml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 

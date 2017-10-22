@@ -1,13 +1,13 @@
 package JiaoGoBang.Client.Action.Send;
 
 
-import JiaoGoBang.Client.ClientThread;
+
 import JiaoGoBang.Client.UI.UI;
 import JiaoGoBang.Common.Request;
 import JiaoGoBang.Common.XStreamUtil;
 import JiaoGoBang.Common.Model.User;
 
-public class Prepare {
+public class Prepare implements Send {
 	private String mode;
 
 	
@@ -23,7 +23,7 @@ public class Prepare {
 		req.setParameter("mode", mode);
 		String xml = XStreamUtil.toXML(req);
 		user.getPrintStream().println(xml);
-		ClientThread thread = new ClientThread();
-		thread.start();
+		/*ClientThread thread = new ClientThread();
+		thread.start();*/
 	}
 }

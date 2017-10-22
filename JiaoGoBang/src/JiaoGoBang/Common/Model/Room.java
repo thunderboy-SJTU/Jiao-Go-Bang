@@ -9,7 +9,9 @@ public class Room {
 	private ChessTable chessTable;
 	private int count;
 	private int prepareCount;
-	private Lock lock = new ReentrantLock();
+
+	private Lock prepareCountLock = new ReentrantLock();
+	private Lock countLock = new ReentrantLock();
 
 	public Room(Player player1, Player player2) {
 		this.player1 = player1;
@@ -67,32 +69,43 @@ public class Room {
 	}
 
 	public void setCount(int count) {
+		countLock.lock();
 		this.count = count;
+		countLock.unlock();
 	}
 	
 	public void setPrepareCount(int prepareCount)
 	{
-		lock.lock();
+		prepareCountLock.lock();
 		this.prepareCount = prepareCount;
-		lock.unlock();
+		prepareCountLock.unlock();
 	}
 	
 	public void addCount() {
+		countLock.lock();
 		count++;
+		countLock.unlock();
+	}
+	
+	public void removeCount()
+	{
+		countLock.lock();
+		count--;
+		countLock.unlock();
 	}
 	
 	public void addPrepareCount()
 	{
-		lock.lock();
+		prepareCountLock.lock();
 		prepareCount++;
-		lock.unlock();
+		prepareCountLock.unlock();
 	}
 	
 	public void removePrepareCount()
 	{
-		lock.lock();
+		prepareCountLock.lock();
 		prepareCount--;
-		lock.unlock();
+		prepareCountLock.unlock();
 	}
 	
 	public void reset()
@@ -100,9 +113,11 @@ public class Room {
 		chessTable = new ChessTable(14,14);
 		setPrepareCount(0);
 		player1.setStatus(1);
-		player2.setStatus(1);
+		if(player2!= null)
+		    player2.setStatus(1);
 		player1.setColor(null);
-		player2.setColor(null);
+		if(player2!= null)
+		   player2.setColor(null);
 	}
 	
 	public int getPlayerNumber(Player player)

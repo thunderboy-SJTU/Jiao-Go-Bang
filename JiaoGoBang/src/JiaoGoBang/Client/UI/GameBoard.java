@@ -12,8 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import JiaoGoBang.Client.Action.Send.CancelPrepare;
+import JiaoGoBang.Client.Action.Send.Lose;
 import JiaoGoBang.Client.Action.Send.Pass;
 import JiaoGoBang.Client.Action.Send.Prepare;
+import JiaoGoBang.Client.Action.Send.ReturnBack;
+import JiaoGoBang.Client.Action.Send.WithdrawRequire;
 
 public class GameBoard extends JFrame {
 
@@ -28,6 +31,7 @@ public class GameBoard extends JFrame {
 	private Button prepareButton;
 	private Button passButton;
 	private Button returnButton;
+	private Button withdrawButton;
 	private String mode;
 
 	public GameBoard(String rivalname, String mode) {
@@ -63,7 +67,8 @@ public class GameBoard extends JFrame {
 		prepareButton = new Button("准备", 1);
 		passButton = new Button("PASS", 1);
 		passButton.setEnabled(false);
-		Button withdraw = new Button("悔棋", 1);
+		withdrawButton = new Button("悔棋", 1);
+		withdrawButton.setEnabled(false);
 		returnButton = new Button("返回", 1);
 		
 		PrepareAction prepareAction = new PrepareAction();
@@ -72,8 +77,13 @@ public class GameBoard extends JFrame {
 		PassAction passAction = new PassAction();
 		passButton.addActionListener(passAction);
 		
+		WithdrawAction withdrawAction = new WithdrawAction();
+		withdrawButton.addActionListener(withdrawAction);
+		
+		ReturnAction returnAction = new ReturnAction();
+		returnButton.addActionListener(returnAction);
 		passPanel.add(passButton);
-		withdrawPanel.add(withdraw);
+		withdrawPanel.add(withdrawButton);
 		giveUpPanel.add(returnButton);
 		preparePanel.add(prepareButton);
 		buttons.add(preparePanel);
@@ -118,6 +128,11 @@ public class GameBoard extends JFrame {
 		return returnButton;
 	}
 	
+	public Button getWithdrawButton()
+	{
+		return withdrawButton;
+	}
+	
 	public ChessBoard getChessBoard()
 	{
 		return chessBoard;
@@ -145,6 +160,7 @@ public class GameBoard extends JFrame {
 	    prepareButton.setEnabled(true);
 	    prepareButton.setText("准备");
 	    passButton.setEnabled(false);
+	    withdrawButton.setEnabled(false);
 	    returnButton.setText("返回");
 	    repaint();
 	}
@@ -167,12 +183,12 @@ public class GameBoard extends JFrame {
 			Button button = GameBoard.this.prepareButton;
 			if (button.getText().equals("准备")){
 				GameBoard.this.prepareButton.setText("取消");
-				Prepare prepare = new Prepare("PVP");
+				Prepare prepare = new Prepare(mode);
 				prepare.execute();
 			}	
 			else
 			{
-				CancelPrepare cancelPrepare = new CancelPrepare("PVP");
+				CancelPrepare cancelPrepare = new CancelPrepare(mode);
 				cancelPrepare.execute();
 				
 			}
@@ -185,22 +201,31 @@ public class GameBoard extends JFrame {
 			Button button = GameBoard.this.passButton;
 			button.setEnabled(false);
 			UI.getGameBoard().setStatus(0);
-			Pass pass = new Pass();
+			Pass pass = new Pass(mode);
 			pass.execute();
 		}
 	}
 	
 	private class ReturnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Button button = GameBoard.this.prepareButton;
+			Button button = GameBoard.this.returnButton;
 			if (button.getText().equals("返回")){
-				
+				UI.getGameBoard().setEnabled(false);
+				ReturnBack returnBack = new ReturnBack();
+				returnBack.execute();
 			}	
 			else
 			{
-				
+				Lose lose = new Lose(mode);
+				lose.execute();
 			}
-
+		}
+	}
+	
+	private class WithdrawAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			WithdrawRequire withdraw = new WithdrawRequire(mode);
+			withdraw.execute();
 		}
 	}
 	

@@ -17,6 +17,7 @@ public class EnterRoomAction implements Action {
 			JOptionPane.showMessageDialog(null, "进入房间过程中遇到错误！", "ERROR", JOptionPane.PLAIN_MESSAGE, icon);
 			return;
 		}
+		System.out.println("lalala");
 		String rivalname = (String) response.getData("rivalname");
 		UI.getGameBoard().setRivalname(rivalname);
 		UI.getGameBoard().repaint();

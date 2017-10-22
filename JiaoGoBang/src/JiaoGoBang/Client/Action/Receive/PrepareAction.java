@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 
-import JiaoGoBang.Client.ClientThread;
 import JiaoGoBang.Client.UI.UI;
 import JiaoGoBang.Common.Response;
 
@@ -34,12 +33,15 @@ public class PrepareAction implements Action {
 
 		} else {
 			color = Color.WHITE;
-			UI.getGameBoard().setStatus(0);
-			ClientThread thread = new ClientThread();
-			thread.start();
+			if (UI.getGameBoard().getChessBoard().getChessTable().getChessCount() != 0)
+				UI.getGameBoard().setStatus(0);
+			/*
+			 * ClientThread thread = new ClientThread(); thread.start();
+			 */
 		}
 		UI.getGameBoard().setColor(color);
 		UI.getGameBoard().getPrepareButton().setEnabled(false);
+		UI.getGameBoard().getWithdrawButton().setEnabled(true);
 		UI.getGameBoard().getReturnButton().setText("»œ ‰");
 		UI.getGameBoard().repaint();
 		return;
